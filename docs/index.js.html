@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>index.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-svelte-form.html">svelte-form</a></li><li><a href="module-svelte-form_rule_between.html">svelte-form/rule/between</a></li><li><a href="module-svelte-form_rule_email.html">svelte-form/rule/email</a></li><li><a href="module-svelte-form_rule_equal.html">svelte-form/rule/equal</a></li><li><a href="module-svelte-form_rule_max.html">svelte-form/rule/max</a></li><li><a href="module-svelte-form_rule_min.html">svelte-form/rule/min</a></li><li><a href="module-svelte-form_rule_required.html">svelte-form/rule/required</a></li><li><a href="module-svelte-form_rule_rx.html">svelte-form/rule/rx</a></li><li><a href="module-svelte-form_rule_url.html">svelte-form/rule/url</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Svelte Form module.
+ * @module svelte-form
+ */
+
+import tc from '@spaceavocado/type-check';
+import {writable, derived, get} from 'svelte/store';
+
+// Rules
+import required from './rule/required';
+import email from './rule/email';
+import url from './rule/url';
+import equal from './rule/equal';
+import min from './rule/min';
+import max from './rule/max';
+import between from './rule/between';
+import rx from './rule/rx';
+
+export {
+  required,
+  email,
+  url,
+  equal,
+  min,
+  max,
+  between,
+  rx,
+};
+
+/**
+ * Get input validation rules
+ * @private
+ * @param {string} key input key.
+ * @param {object} validation rules.
+ * @return {function[]} validation rules.
+ */
+function validationRules(key, validation) {
+  validation = validation || {};
+  if (tc.isNullOrUndefined(validation[key])) {
+    return [];
+  }
+  if (tc.isArray(validation[key])) {
+    return validation[key];
+  }
+  return [validation[key]];
+}
+
+/**
+ * Validate field
+ * @private
+ * @param {mixed} value field value.
+ * @param {function[]} rules filed validation rules.
+ * @return {boolean|string} true = no error, string = error message.
+ */
+function validate(value, rules) {
+  for (let i = 0; i &lt; rules.length; i++) {
+    const err = rules[i](value);
+    if (err !== true) {
+      return err;
+    }
+  }
+  return true;
+}
+
+/**
+ * Form object
+ * @typedef Form
+ * @property {function} subscribe Svelte store, context {valid: boolean}.
+ * @property {function} field Get form field observable value and state.
+ * Signature fn(key), returns {module:svelte-form~FormField}.
+ * @property {function} data Get all form fields data. Signature fn().
+ */
+
+/**
+ * FormField object
+ * @typedef FormField
+ * @property {function} value Svelte store, context: mixed value.
+ * @property {function} state Svelte store,
+ * context: {valid: boolean, error: string}.
+ */
+
+/**
+ * Create a new form store
+ * @param {object} fields Form fields.
+ * @param {object} validation Validation rules mapping.
+ * Where each key is a fn(val)->boolean validation function or
+ * an array of fn(val)->boolean validation functions.
+ * @param {object} opts Form options.
+ * @param {boolean} opts.onCreateValidation Validate form fields
+ * when the form is created. Defaults to false.
+ * @return {module:svelte-form~Form}
+ */
+export default function(fields, validation, opts) {
+  opts = opts || {};
+  opts.onCreateValidation = opts.onCreateValidation || false;
+  const _fields = {};
+
+  // Field wrapper structure
+  const field = (key, rules) => {
+    let firstPass = true;
+    const value = writable(fields[key]);
+    const state = derived(
+        value,
+        ($value) => {
+          if (firstPass) {
+            firstPass = false;
+            if (opts.onCreateValidation === false) {
+              return {
+                valid: true,
+                error: '',
+              };
+            }
+          }
+          const res = validate($value, rules);
+          return {
+            valid: res === true,
+            error: res === true ? '' : res,
+          };
+        }
+    );
+    return {
+      value,
+      state,
+    };
+  };
+
+  // Convert all inputs into field wrappers
+  for (const key in fields) {
+    if (fields.hasOwnProperty(key)) {
+      _fields[key] = field(key, validationRules(key, validation));
+    }
+  }
+
+  // Overall valid state
+  const {subscribe} = derived(
+      Object.values(_fields).map((f) => f.state),
+      ($states) => {
+        return {
+          valid: $states.every((s) => s.valid === true),
+        };
+      }
+  );
+
+  return {
+    subscribe,
+    field: (key) => {
+      if (tc.isNullOrUndefined(_fields[key])) {
+        return undefined;
+      }
+      return {
+        value: _fields[key].value,
+        state: _fields[key].state,
+      };
+    },
+    data: () => {
+      const data = {};
+      for (const key in _fields) {
+        if (_fields.hasOwnProperty(key)) {
+          data[key] = get(_fields[key].value);
+        }
+      }
+      return data;
+    },
+  };
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Aug 21 2019 15:57:41 GMT-0400 (Eastern Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

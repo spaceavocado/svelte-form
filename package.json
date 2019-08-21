@@ -1,0 +1,53 @@
+{
+  "name": "@spaceavocado/svelte-form",
+  "version": "1.0.0",
+  "description": "Simple Svelte form model handler and input validations.",
+  "main": "lib/svelte-form.js",
+  "module": "lib/svelte-form.esm.js",
+  "files": [
+    "/lib",
+    "changelog.md"
+  ],
+  "author": "David Horak <info@davidhorak.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest /src/*",
+    "docs": "jsdoc . -r -d docs -c jsdoc.json -R readme.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:spaceavocado/svelte-form.git"
+  },
+  "bugs": {
+    "url": "https://github.com/spaceavocado/svelte-form/issues"
+  },
+  "homepage": "https://github.com/spaceavocado/svelte-form",
+  "keywords": [
+    "svelte",
+    "form",
+    "validation",
+    "plugins"
+  ],
+  "dependencies": {
+    "@spaceavocado/type-check": "^1.0.1"
+  },
+  "peerDependencies": {
+    "svelte": "^3.8.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-eslint": "^10.0.2",
+    "docdash": "^1.1.1",
+    "eslint": "^6.2.1",
+    "eslint-config-google": "^0.13.0",
+    "jest": "^24.8.0",
+    "rollup": "^1.20.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0"
+  }
+}

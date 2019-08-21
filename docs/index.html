@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-svelte-form.html">svelte-form</a></li><li><a href="module-svelte-form_rule_between.html">svelte-form/rule/between</a></li><li><a href="module-svelte-form_rule_email.html">svelte-form/rule/email</a></li><li><a href="module-svelte-form_rule_equal.html">svelte-form/rule/equal</a></li><li><a href="module-svelte-form_rule_max.html">svelte-form/rule/max</a></li><li><a href="module-svelte-form_rule_min.html">svelte-form/rule/min</a></li><li><a href="module-svelte-form_rule_required.html">svelte-form/rule/required</a></li><li><a href="module-svelte-form_rule_rx.html">svelte-form/rule/rx</a></li><li><a href="module-svelte-form_rule_url.html">svelte-form/rule/url</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+    <section class="package">
+        <h3> </h3>		
+    </section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="readme">
+        <article><h1>Svelte Form</h1><p>Simple <a href="#https://svelte.dev">Svelte</a> Form model handler and form fields validation library. It is designed to give maximum freedom in the actual input component construction, i.e. there are not actual build-in input components, rather examples how to build one.</p>
+<p>To see the details code documentation, please read the <a href="https://spaceavocado.github.io/svelte-form/">Code Documentation</a>.</p>
+<p><strong>Quick Links</strong></p>
+<ul>
+<li><a href="#webpack-setup">Webpack Setup</a></li>
+<li><a href="#rollup-setup">Rollup Setup</a></li>
+</ul>
+<p><strong>Table of Content</strong></p>
+<ul>
+<li><a href="#svelte-form">Svelte Form</a><ul>
+<li><a href="#installation-via-npm-or-yarn">Installation via NPM or Yarn</a></li>
+<li><a href="#webpack-setup">Webpack Setup</a></li>
+<li><a href="#rollup-setup">Rollup Setup</a></li>
+<li><a href="#essentials">Essentials</a><ul>
+<li><a href="#create-the-form">Create the Form</a></li>
+<li><a href="#input-binding">Input Binding</a></li>
+<li><a href="#form-state">Form State</a></li>
+<li><a href="#form-data">Form Data</a></li>
+<li><a href="#form-field-validation">Form Field Validation</a></li>
+<li><a href="#builtin-validation-rules">Builtin Validation Rules</a><ul>
+<li><a href="#required">Required</a></li>
+<li><a href="#equal">Equal</a></li>
+<li><a href="#email">Email</a></li>
+<li><a href="#url">URL</a></li>
+<li><a href="#min">Min</a></li>
+<li><a href="#max">Max</a></li>
+<li><a href="#between">Between</a></li>
+<li><a href="#regular-expression">Regular Expression</a></li>
+</ul>
+</li>
+<li><a href="#custom-validation-rule">Custom Validation Rule</a></li>
+</ul>
+</li>
+<li><a href="#api">API</a><ul>
+<li><a href="#create-form">Create Form</a><ul>
+<li><a href="#form-options">Form Options</a></li>
+</ul>
+</li>
+<li><a href="#form-object">Form Object</a></li>
+<li><a href="#form-field-object">Form Field Object</a></li>
+</ul>
+</li>
+<li><a href="#changes">Changes</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#contributing">Contributing</a><ul>
+<li><a href="#pull-request-process">Pull Request Process</a></li>
+</ul>
+</li>
+<li><a href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+<h2>Installation via NPM or Yarn</h2><pre class="prettyprint source lang-sh"><code>npm install -D @spaceavocado/svelte-form</code></pre><pre class="prettyprint source lang-sh"><code>yarn add @spaceavocado/svelte-form -D</code></pre><h2>Webpack Setup</h2><p>Please see the <a href="https://github.com/sveltejs/template-webpack">Svelte Webpack Template</a>.
+Important setup in the <strong>webpack.config.js</strong>:</p>
+<pre class="prettyprint source lang-javascript"><code>resolve: {
+  // This alias is important to prevent svelte mismatch
+  // between your code, and the 3rd party components.
+  alias: {
+    svelte: path.resolve('node_modules', 'svelte')
+  },
+  extensions: ['.mjs', '.js', '.svelte'],
+  mainFields: ['svelte', 'browser', 'module', 'main']
+},
+
+module: {
+  rules: [
+    {
+      test: /\.svelte$/,
+      // Do not exclude: /(node_modules)/ since the router 
+      // components are located in the node_modules
+      use: {
+        loader: 'svelte-loader',
+        options: {
+          emitCss: true,
+          hotReload: true
+        }
+      }
+    }
+  ]
+}</code></pre><h2>Rollup Setup</h2><p>rollup.config.js:</p>
+<pre class="prettyprint source lang-javascript"><code>import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import svelte from 'rollup-plugin-svelte';
+
+export default {
+  input: './src/index.js',
+  output: {
+    file: './dist/bundle.js',
+    format: 'iife'
+  },
+  plugins: [
+    resolve(),
+    commonjs({
+      include: 'node_modules/**',
+    }),
+    svelte(),
+    babel({
+      exclude: 'node_modules/**',
+    }),
+  ]
+}</code></pre><h2>Essentials</h2><p>Note: All code below uses ES2015+.</p>
+<h3>Create the Form</h3><p>form.svelte:</p>
+<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+
+// An example of a form without validation
+const form = createForm({
+  username: '',
+  password: '',
+});</code></pre><blockquote>
+<p>To get more details about the createForm method, please see <a href="#create-form">Create Form</a>.</p>
+</blockquote>
+<h3>Input Binding</h3><p>form.svelte:</p>
+<pre class="prettyprint source lang-html"><code>&lt;script>
+import createForm from '@spaceavocado/form';
+import TextInput from './input/text.svelte';
+
+// An example of a form without validation
+const form = createForm({
+  username: '',
+  password: '',
+});
+&lt;/script>
+
+&lt;TextInput form={form} name='username' /></code></pre><p>text.svelte:</p>
+<pre class="prettyprint source lang-html"><code>&lt;script>
+  // Props
+  export let form;
+  export let name;
+
+  // Get the form field
+  $: field = form.field(name);
+  // Value svelte store
+  $: value = field.value;
+  // State svelte store, {valid: boolean, error: string}
+  $: state = field.state;
+&lt;/script>
+
+&lt;div class=&quot;input&quot; class:error=&quot;{$state.valid === false}&quot;>
+  &lt;input type=&quot;text&quot; bind:value=&quot;{value}&quot; />
+  &lt;p class=&quot;validation&quot;>{$state.error}&lt;/p>
+&lt;/div>
+
+&lt;style lang=&quot;scss&quot;>
+.input {
+  .validation {
+    display: none;
+  }
+  &.error {
+    .validation {
+      display: block;
+    }
+  }
+}
+&lt;/style></code></pre><ul>
+<li>The state store is a derived store based on the value store, performing the input validation each time the value changes.</li>
+<li>The <strong>form.field(name)</strong> method gets the field stores, for more details see <a href="#form-field-object">Form Field Object</a>.</li>
+</ul>
+<h3>Form State</h3><p>The form state is a svelte store holding the form validation state.</p>
+<p>form.svelte:</p>
+<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+
+// An example of a form without validation
+const form = createForm({
+  username: '',
+  password: '',
+});
+
+// You can directly subscribe to form state change
+form.subscribe((f) => console.log(f.valid));
+// or shorthand access.
+console.log($form.valid)</code></pre><blockquote>
+<p>To get more details about the form, please see <a href="#form-object">Form Object</a>.</p>
+</blockquote>
+<h3>Form Data</h3><p>You can get the current form date anytime by calling:</p>
+<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+
+// An example of a form without validation
+const form = createForm({
+  username: '',
+  password: '',
+});
+
+// Get the form current data
+const data = form.data();</code></pre><h3>Form Field Validation</h3><p>Validation functions could be passed for individual form fields:</p>
+<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+import {required, email} from '@spaceavocado/form';
+
+// An example of a form without validation
+const form = createForm(
+  // Form fields
+  {
+    username: '',
+    password: '',
+  },
+  // Form validation - optional
+  // Collection of validation rules or single rule.
+  {
+    username: [
+      required('This field is required'),
+      email('Invalid email format')
+    ],
+    password: required('This field is required'),
+  }
+);</code></pre><p><strong>More information:</strong></p>
+<ul>
+<li><a href="#builtin-validation-rules">Builtin Validation Rules</a>.</li>
+<li><a href="#custom-validation-rule">Custom Validation Rule</a>.</li>
+</ul>
+<h3>Builtin Validation Rules</h3><h4>Required</h4><pre class="prettyprint source lang-javascript"><code>import {required} from '@spaceavocado/form';
+
+// Create new rule
+const rule = required('Error message');</code></pre><h4>Equal</h4><pre class="prettyprint source lang-javascript"><code>import {equal} from '@spaceavocado/form';
+
+// The value must be equal to 5
+const rule = equal('Error message', 5);
+
+// Equal can accept fn(val)->boolean as an argument for a custom
+// equality matching.
+const customMatcherRule = equal('Error message', (val) => {
+  return val === 5;
+});</code></pre><h4>Email</h4><pre class="prettyprint source lang-javascript"><code>import {email} from '@spaceavocado/form';
+
+// Create new rule
+const rule = email('Error message');</code></pre><h4>URL</h4><pre class="prettyprint source lang-javascript"><code>import {url} from '@spaceavocado/form';
+
+// Create new rule
+const rule = url('Error message');</code></pre><h4>Min</h4><pre class="prettyprint source lang-javascript"><code>import {min} from '@spaceavocado/form';
+
+// The value must be 5 and more.
+const rule = min('Error message', 5);</code></pre><h4>Max</h4><pre class="prettyprint source lang-javascript"><code>import {max} from '@spaceavocado/form';
+
+// The value must be 5 and less.
+const rule = max('Error message', 5);</code></pre><h4>Between</h4><pre class="prettyprint source lang-javascript"><code>import {between} from '@spaceavocado/form';
+
+// The value must be between 5 and 10 inclusively.
+const rule = between('Error message', 5, 10);</code></pre><h4>Regular Expression</h4><pre class="prettyprint source lang-javascript"><code>import {rx} from '@spaceavocado/form';
+
+// The value must match custom regular expression.
+const rule = rx('Error message', /\d+\.\d+/);</code></pre><h3>Custom Validation Rule</h3><p>Custom validation rule must be a function accepting a tested value, and expected to return true when valid, or error message string in not valid, e.g.:</p>
+<pre class="prettyprint source lang-javascript"><code>const invoice = (msg) => (value) => {
+  if (value.match(/inv-\d+/) === null) {
+    return msg;
+  }
+  return true;
+}
+
+// The actual rule expected by the form field, e.g. fn(val)->true|string
+const rule = invoice('Invalid invoice number');</code></pre><h2>API</h2><p>To see the details code documentation, please read the <a href="https://spaceavocado.github.io/svelte-form/">Code Documentation</a></p>
+<h3>Create Form</h3><pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+
+// Please see the opts below.
+const formOpts = {};
+
+// Please see the Form object for details on returned object
+const form = createForm(
+  // Form fields
+  {
+    username: '',
+    password: '',
+  },
+  // Form validation - optional
+  // Collection of validation rules or single rule.
+  {
+    username: [
+      required('This field is required'),
+      email('Invalid email format')
+    ],
+    password: required('This field is required'),
+  },
+  // Form options - optional
+  formOpts,
+);</code></pre><h4>Form Options</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">Property</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">onCreateValidation</td>
+<td style="text-align:left">Validate form fields when the form is created. Defaults to false.</td>
+<td style="text-align:left">boolean</td>
+</tr>
+</tbody>
+</table>
+<h3>Form Object</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Property</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">subscribe</td>
+<td style="text-align:left">Svelte store, context {valid: boolean}.</td>
+<td style="text-align:left">function</td>
+</tr>
+<tr>
+<td style="text-align:left">field</td>
+<td style="text-align:left">Get form field observable value and state. Signature fn(key), returns <a href="#form-field-object">Form Field Object</a>.</td>
+<td style="text-align:left">function</td>
+</tr>
+<tr>
+<td style="text-align:left">data</td>
+<td style="text-align:left">Get all form fields data. Signature fn().</td>
+<td style="text-align:left">function</td>
+</tr>
+</tbody>
+</table>
+<h3>Form Field Object</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">Property</th>
+<th style="text-align:left">Description</th>
+<th style="text-align:left">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">value</td>
+<td style="text-align:left">Svelte store, context: mixed value.</td>
+<td style="text-align:left">function</td>
+</tr>
+<tr>
+<td style="text-align:left">state</td>
+<td style="text-align:left">Svelte store, context: {valid: boolean, error: string}.</td>
+<td style="text-align:left">function</td>
+</tr>
+</tbody>
+</table>
+<h2>Changes</h2><p>To see the changes that were made in a given release, please lookup the tag on the releases page. The full changelog could be seen here <a href="https://github.com/spaceavocado/svelte-form/blob/master/changelog.md">changelog.md</a></p>
+<h2>About</h2><p>This project is mainly to explore and test <a href="#https://svelte.dev">Svelte</a> in SPA realm. Any feedback, contribution to this project is welcomed.</p>
+<p>The project is in a beta phase, therefore there might be major changes in near future, the annotation should stay the same, though.</p>
+<h2>Contributing</h2><p>When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.</p>
+<h3>Pull Request Process</h3><ol>
+<li>Fork it</li>
+<li>Create your feature branch (git checkout -b ft/new-feature-name)</li>
+<li>Commit your changes (git commit -am 'Add some feature')</li>
+<li>Push to the branch (git push origin ft/new-feature-name)</li>
+<li>Create new Pull Request<blockquote>
+<p>Please make an issue first if the change is likely to increase.</p>
+</blockquote>
+</li>
+</ol>
+<h2>License</h2><p>Svelte Router is released under the MIT license. See <a href="https://github.com/spaceavocado/svelte-router/blob/master/LICENSE.txt">LICENSE.txt</a>.</p></article>
+    </section>
+
+
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Aug 21 2019 15:57:41 GMT-0400 (Eastern Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

@@ -14,7 +14,7 @@ export default (msg) => (value) => {
   if (tc.isNullOrUndefined(value) || tc.not.isString(value)) {
     return msg;
   }
-  if (value.match(/[^@]+@[^\.]+.*\..+/) == null) {
+  if (value.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/) == null) {
     return msg;
   }
   return true;

@@ -112,7 +112,7 @@ Note: All code below uses ES2015+.
 ### Create the Form
 form.svelte:
 ```javascript
-import createForm from '@spaceavocado/form';
+import createForm from '@spaceavocado/svelte-form';
 
 // An example of a form without validation
 const form = createForm({
@@ -126,7 +126,7 @@ const form = createForm({
 form.svelte:
 ```html
 <script>
-import createForm from '@spaceavocado/form';
+import createForm from '@spaceavocado/svelte-form';
 import TextInput from './input/text.svelte';
 
 // An example of a form without validation
@@ -179,7 +179,7 @@ The form state is a svelte store holding the form validation state.
 
 form.svelte:
 ```javascript
-import createForm from '@spaceavocado/form';
+import createForm from '@spaceavocado/svelte-form';
 
 // An example of a form without validation
 const form = createForm({
@@ -198,7 +198,7 @@ console.log($form.valid)
 ### Form Data
 You can get the current form date anytime by calling:
 ```javascript
-import createForm from '@spaceavocado/form';
+import createForm from '@spaceavocado/svelte-form';
 
 // An example of a form without validation
 const form = createForm({
@@ -214,8 +214,8 @@ const data = form.data();
 Validation functions could be passed for individual form fields:
 
 ```javascript
-import createForm from '@spaceavocado/form';
-import {required, email} from '@spaceavocado/form';
+import createForm from '@spaceavocado/svelte-form';
+import {required, email} from '@spaceavocado/svelte-form';
 
 // An example of a form without validation
 const form = createForm(
@@ -244,7 +244,7 @@ const form = createForm(
 
 #### Required
 ```javascript
-import {required} from '@spaceavocado/form';
+import {required} from '@spaceavocado/svelte-form';
 
 // Create new rule
 const rule = required('Error message');
@@ -252,7 +252,7 @@ const rule = required('Error message');
 
 #### Equal
 ```javascript
-import {equal} from '@spaceavocado/form';
+import {equal} from '@spaceavocado/svelte-form';
 
 // The value must be equal to 5
 const rule = equal('Error message', 5);
@@ -266,7 +266,7 @@ const customMatcherRule = equal('Error message', (val) => {
 
 #### Email
 ```javascript
-import {email} from '@spaceavocado/form';
+import {email} from '@spaceavocado/svelte-form';
 
 // Create new rule
 const rule = email('Error message');
@@ -274,7 +274,7 @@ const rule = email('Error message');
 
 #### URL
 ```javascript
-import {url} from '@spaceavocado/form';
+import {url} from '@spaceavocado/svelte-form';
 
 // Create new rule
 const rule = url('Error message');
@@ -282,7 +282,7 @@ const rule = url('Error message');
 
 #### Min
 ```javascript
-import {min} from '@spaceavocado/form';
+import {min} from '@spaceavocado/svelte-form';
 
 // The value must be 5 and more.
 const rule = min('Error message', 5);
@@ -290,7 +290,7 @@ const rule = min('Error message', 5);
 
 #### Max
 ```javascript
-import {max} from '@spaceavocado/form';
+import {max} from '@spaceavocado/svelte-form';
 
 // The value must be 5 and less.
 const rule = max('Error message', 5);
@@ -298,7 +298,7 @@ const rule = max('Error message', 5);
 
 #### Between
 ```javascript
-import {between} from '@spaceavocado/form';
+import {between} from '@spaceavocado/svelte-form';
 
 // The value must be between 5 and 10 inclusively.
 const rule = between('Error message', 5, 10);
@@ -306,7 +306,7 @@ const rule = between('Error message', 5, 10);
 
 #### Regular Expression
 ```javascript
-import {rx} from '@spaceavocado/form';
+import {rx} from '@spaceavocado/svelte-form';
 
 // The value must match custom regular expression.
 const rule = rx('Error message', /\d+\.\d+/);
@@ -331,7 +331,7 @@ To see the details code documentation, please read the [Code Documentation](http
 
 ### Create Form
 ```javascript
-import createForm from '@spaceavocado/form';
+import createForm from '@spaceavocado/svelte-form';
 
 // Please see the opts below.
 const formOpts = {};

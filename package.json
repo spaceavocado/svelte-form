@@ -1,6 +1,6 @@
 {
   "name": "@spaceavocado/svelte-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple Svelte form model handler and input validations.",
   "main": "lib/svelte-form.js",
   "module": "lib/svelte-form.esm.js",

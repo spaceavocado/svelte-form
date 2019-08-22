@@ -160,7 +160,7 @@ export default {
   ]
 }</code></pre><h2>Essentials</h2><p>Note: All code below uses ES2015+.</p>
 <h3>Create the Form</h3><p>form.svelte:</p>
-<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/svelte-form';
 
 // An example of a form without validation
 const form = createForm({
@@ -171,7 +171,7 @@ const form = createForm({
 </blockquote>
 <h3>Input Binding</h3><p>form.svelte:</p>
 <pre class="prettyprint source lang-html"><code>&lt;script>
-import createForm from '@spaceavocado/form';
+import createForm from '@spaceavocado/svelte-form';
 import TextInput from './input/text.svelte';
 
 // An example of a form without validation
@@ -217,7 +217,7 @@ const form = createForm({
 </ul>
 <h3>Form State</h3><p>The form state is a svelte store holding the form validation state.</p>
 <p>form.svelte:</p>
-<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/svelte-form';
 
 // An example of a form without validation
 const form = createForm({
@@ -232,7 +232,7 @@ console.log($form.valid)</code></pre><blockquote>
 <p>To get more details about the form, please see <a href="#form-object">Form Object</a>.</p>
 </blockquote>
 <h3>Form Data</h3><p>You can get the current form date anytime by calling:</p>
-<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/svelte-form';
 
 // An example of a form without validation
 const form = createForm({
@@ -242,8 +242,8 @@ const form = createForm({
 
 // Get the form current data
 const data = form.data();</code></pre><h3>Form Field Validation</h3><p>Validation functions could be passed for individual form fields:</p>
-<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
-import {required, email} from '@spaceavocado/form';
+<pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/svelte-form';
+import {required, email} from '@spaceavocado/svelte-form';
 
 // An example of a form without validation
 const form = createForm(
@@ -266,10 +266,10 @@ const form = createForm(
 <li><a href="#builtin-validation-rules">Builtin Validation Rules</a>.</li>
 <li><a href="#custom-validation-rule">Custom Validation Rule</a>.</li>
 </ul>
-<h3>Builtin Validation Rules</h3><h4>Required</h4><pre class="prettyprint source lang-javascript"><code>import {required} from '@spaceavocado/form';
+<h3>Builtin Validation Rules</h3><h4>Required</h4><pre class="prettyprint source lang-javascript"><code>import {required} from '@spaceavocado/svelte-form';
 
 // Create new rule
-const rule = required('Error message');</code></pre><h4>Equal</h4><pre class="prettyprint source lang-javascript"><code>import {equal} from '@spaceavocado/form';
+const rule = required('Error message');</code></pre><h4>Equal</h4><pre class="prettyprint source lang-javascript"><code>import {equal} from '@spaceavocado/svelte-form';
 
 // The value must be equal to 5
 const rule = equal('Error message', 5);
@@ -278,22 +278,22 @@ const rule = equal('Error message', 5);
 // equality matching.
 const customMatcherRule = equal('Error message', (val) => {
   return val === 5;
-});</code></pre><h4>Email</h4><pre class="prettyprint source lang-javascript"><code>import {email} from '@spaceavocado/form';
+});</code></pre><h4>Email</h4><pre class="prettyprint source lang-javascript"><code>import {email} from '@spaceavocado/svelte-form';
 
 // Create new rule
-const rule = email('Error message');</code></pre><h4>URL</h4><pre class="prettyprint source lang-javascript"><code>import {url} from '@spaceavocado/form';
+const rule = email('Error message');</code></pre><h4>URL</h4><pre class="prettyprint source lang-javascript"><code>import {url} from '@spaceavocado/svelte-form';
 
 // Create new rule
-const rule = url('Error message');</code></pre><h4>Min</h4><pre class="prettyprint source lang-javascript"><code>import {min} from '@spaceavocado/form';
+const rule = url('Error message');</code></pre><h4>Min</h4><pre class="prettyprint source lang-javascript"><code>import {min} from '@spaceavocado/svelte-form';
 
 // The value must be 5 and more.
-const rule = min('Error message', 5);</code></pre><h4>Max</h4><pre class="prettyprint source lang-javascript"><code>import {max} from '@spaceavocado/form';
+const rule = min('Error message', 5);</code></pre><h4>Max</h4><pre class="prettyprint source lang-javascript"><code>import {max} from '@spaceavocado/svelte-form';
 
 // The value must be 5 and less.
-const rule = max('Error message', 5);</code></pre><h4>Between</h4><pre class="prettyprint source lang-javascript"><code>import {between} from '@spaceavocado/form';
+const rule = max('Error message', 5);</code></pre><h4>Between</h4><pre class="prettyprint source lang-javascript"><code>import {between} from '@spaceavocado/svelte-form';
 
 // The value must be between 5 and 10 inclusively.
-const rule = between('Error message', 5, 10);</code></pre><h4>Regular Expression</h4><pre class="prettyprint source lang-javascript"><code>import {rx} from '@spaceavocado/form';
+const rule = between('Error message', 5, 10);</code></pre><h4>Regular Expression</h4><pre class="prettyprint source lang-javascript"><code>import {rx} from '@spaceavocado/svelte-form';
 
 // The value must match custom regular expression.
 const rule = rx('Error message', /\d+\.\d+/);</code></pre><h3>Custom Validation Rule</h3><p>Custom validation rule must be a function accepting a tested value, and expected to return true when valid, or error message string in not valid, e.g.:</p>
@@ -306,7 +306,7 @@ const rule = rx('Error message', /\d+\.\d+/);</code></pre><h3>Custom Validation 
 
 // The actual rule expected by the form field, e.g. fn(val)->true|string
 const rule = invoice('Invalid invoice number');</code></pre><h2>API</h2><p>To see the details code documentation, please read the <a href="https://spaceavocado.github.io/svelte-form/">Code Documentation</a></p>
-<h3>Create Form</h3><pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/form';
+<h3>Create Form</h3><pre class="prettyprint source lang-javascript"><code>import createForm from '@spaceavocado/svelte-form';
 
 // Please see the opts below.
 const formOpts = {};
@@ -421,7 +421,7 @@ const form = createForm(
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Aug 21 2019 15:57:41 GMT-0400 (Eastern Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Aug 22 2019 11:08:48 GMT-0400 (Eastern Daylight Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>

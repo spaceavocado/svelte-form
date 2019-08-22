@@ -28,6 +28,7 @@ To see the details code documentation, please read the [Code Documentation](http
       - [Between](#between)
       - [Regular Expression](#regular-expression)
     - [Custom Validation Rule](#custom-validation-rule)
+    - [Trigger Form Validation](#trigger-form-validation)
   - [API](#api)
     - [Create Form](#create-form)
       - [Form Options](#form-options)
@@ -324,6 +325,35 @@ const invoice = (msg) => (value) => {
 
 // The actual rule expected by the form field, e.g. fn(val)->true|string
 const rule = invoice('Invalid invoice number');
+```
+
+### Trigger Form Validation
+Validation could be trigger all fields in this manner:
+
+```javascript
+import createForm from '@spaceavocado/svelte-form';
+import {required, email} from '@spaceavocado/svelte-form';
+
+// An example of a form without validation
+const form = createForm(
+  // Form fields
+  {
+    username: '',
+    password: '',
+  },
+  // Form validation - optional
+  // Collection of validation rules or single rule.
+  {
+    username: [
+      required('This field is required'),
+      email('Invalid email format')
+    ],
+    password: required('This field is required'),
+  }
+);
+
+// Trigger validation of all fields
+form.validate();
 ```
 
 ## API

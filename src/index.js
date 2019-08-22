@@ -68,14 +68,15 @@ function validate(value, rules) {
  * @property {function} subscribe Svelte store, context {valid: boolean}.
  * @property {function} field Get form field observable value and state.
  * Signature fn(key), returns {module:svelte-form~FormField}.
+ * @property {function} validate Trigger all fields validation.
  * @property {function} data Get all form fields data. Signature fn().
  */
 
 /**
  * FormField object
  * @typedef FormField
- * @property {function} value Svelte store, context: mixed value.
- * @property {function} state Svelte store,
+ * @property {function} value Writeable Svelte store, context: mixed value.
+ * @property {function} state Readonly Svelte store,
  * context: {valid: boolean, error: string}.
  */
 
@@ -94,14 +95,15 @@ export default function(fields, validation, opts) {
   opts = opts || {};
   opts.onCreateValidation = opts.onCreateValidation || false;
   const _fields = {};
+  const form = writable(Date.now());
 
   // Field wrapper structure
   const field = (key, rules) => {
     let firstPass = true;
     const value = writable(fields[key]);
     const state = derived(
-        value,
-        ($value) => {
+        [value, form],
+        ([$value]) => {
           if (firstPass) {
             firstPass = false;
             if (opts.onCreateValidation === false) {
@@ -125,7 +127,8 @@ export default function(fields, validation, opts) {
   };
 
   // Convert all inputs into field wrappers
-  for (const key in fields) {
+  let key;
+  for (key in fields) {
     if (fields.hasOwnProperty(key)) {
       _fields[key] = field(key, validationRules(key, validation));
     }
@@ -152,9 +155,13 @@ export default function(fields, validation, opts) {
         state: _fields[key].state,
       };
     },
+    validate: () => {
+      form.set(Date.now());
+    },
     data: () => {
       const data = {};
-      for (const key in _fields) {
+      let key;
+      for (key in _fields) {
         if (_fields.hasOwnProperty(key)) {
           data[key] = get(_fields[key].value);
         }

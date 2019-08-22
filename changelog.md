@@ -1,5 +1,9 @@
 # Svelte Form changelog
 
+## 1.0.2
+
+* New feature: Add new function to trigger validation on all fields.
+
 ## 1.0.1
 
 * Updated email validation rule.

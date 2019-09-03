@@ -155,7 +155,7 @@ text.svelte:
 </script>
 
 <div class="input" class:error="{$state.valid === false}">
-  <input type="text" bind:value="{value}" />
+  <input type="text" bind:value="{$value}" />
   <p class="validation">{$state.error}</p>
 </div>
 

@@ -27,6 +27,7 @@ To see the details code documentation, please read the [Code Documentation](http
       - [Max](#max)
       - [Between](#between)
       - [Regular Expression](#regular-expression)
+      - [Ignore Empty](#ignore-empty)
     - [Custom Validation Rule](#custom-validation-rule)
     - [Trigger Form Validation](#trigger-form-validation)
   - [API](#api)
@@ -311,6 +312,28 @@ import {rx} from '@spaceavocado/svelte-form';
 
 // The value must match custom regular expression.
 const rule = rx('Error message', /\d+\.\d+/);
+```
+
+#### Ignore Empty
+This is a special rule which might be used to the ignore empty fields, i.e. any other validation rules will be tested only if the value in not empty.
+```javascript
+import {ignoreEmpty, url} from '@spaceavocado/svelte-form';
+
+// An example usage
+const form = createForm(
+  // Form fields
+  {
+    website: '',
+  },
+  // URL validation will be tested only if the website in not empty.
+  {
+    website: [
+      ignoreEmpty(),
+      url('Invalid URL'),
+    ],
+  }
+);
+
 ```
 
 ### Custom Validation Rule

@@ -6,6 +6,7 @@ import min from './min';
 import max from './max';
 import between from './between';
 import rx from './rx';
+import ignore, {BREAK_FLAG} from './ignoreEmpty';
 
 /**
  * Rur rule tests
@@ -124,4 +125,17 @@ describe('Rx', () => {
     {cond: '5.5', res: true},
   ];
   runTests(rx('invalid', /\d+\.\d+/), tests);
+});
+
+describe('Ignore', () => {
+  const tests = [
+    {cond: undefined, res: BREAK_FLAG},
+    {cond: null, res: BREAK_FLAG},
+    {cond: {}, res: BREAK_FLAG},
+    {cond: '', res: BREAK_FLAG},
+    {cond: 5, res: true},
+    {cond: '5.', res: true},
+    {cond: '5.5', res: true},
+  ];
+  runTests(ignore(), tests);
 });

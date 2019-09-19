@@ -1,6 +1,6 @@
 {
   "name": "@spaceavocado/svelte-form",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple Svelte form model handler and input validations.",
   "main": "lib/svelte-form.js",
   "module": "lib/svelte-form.esm.js",
@@ -44,6 +44,7 @@
     "eslint": "^6.2.1",
     "eslint-config-google": "^0.13.0",
     "jest": "^24.8.0",
+    "svelte": "^3.8.1",
     "rollup": "^1.20.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.2",

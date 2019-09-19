@@ -5,6 +5,7 @@
 
 import tc from '@spaceavocado/type-check';
 import {writable, derived, get} from 'svelte/store';
+import {BREAK_FLAG} from './rule/ignoreEmpty';
 
 // Rules
 import required from './rule/required';
@@ -15,8 +16,10 @@ import min from './rule/min';
 import max from './rule/max';
 import between from './rule/between';
 import rx from './rule/rx';
+import ignoreEmpty from './rule/ignoreEmpty';
 
 export {
+  ignoreEmpty,
   required,
   email,
   url,
@@ -34,7 +37,7 @@ export {
  * @param {object} validation rules.
  * @return {function[]} validation rules.
  */
-function validationRules(key, validation) {
+export function validationRules(key, validation) {
   validation = validation || {};
   if (tc.isNullOrUndefined(validation[key])) {
     return [];
@@ -52,10 +55,12 @@ function validationRules(key, validation) {
  * @param {function[]} rules filed validation rules.
  * @return {boolean|string} true = no error, string = error message.
  */
-function validate(value, rules) {
+export function validate(value, rules) {
   for (let i = 0; i < rules.length; i++) {
     const err = rules[i](value);
-    if (err !== true) {
+    if (err === BREAK_FLAG) {
+      return true;
+    } else if (err !== true) {
       return err;
     }
   }

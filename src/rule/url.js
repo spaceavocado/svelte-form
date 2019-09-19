@@ -14,7 +14,7 @@ export default (msg) => (value) => {
   if (tc.isNullOrUndefined(value) || tc.not.isString(value)) {
     return msg;
   }
-  if (value.match(/https?:.*/i) == null) {
+  if (value.match(/^https?:\/\/[^\s]*/i) == null) {
     return msg;
   }
   return true;

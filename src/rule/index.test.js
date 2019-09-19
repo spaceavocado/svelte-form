@@ -66,6 +66,8 @@ describe('URL', () => {
     {cond: 'domain.com', res: 'invalid'},
     {cond: 'http://domain.com', res: true},
     {cond: 'https://domain.com', res: true},
+    {cond: 'http://www.example.com/products?id=1&page=2', res: true},
+    {cond: 'http://255.255.255.255', res: true},
   ];
   runTests(url('invalid'), tests);
 });

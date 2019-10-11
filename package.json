@@ -14,7 +14,8 @@
     "build": "rollup -c",
     "test": "jest --verbose /src/*",
     "docs": "jsdoc . -r -d docs -c jsdoc.json -R readme.md",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "license-check": "license-checker --summary --excludePrivatePackages --onlyAllow 'MIT;MIT OR X11;BSD;ISC;Apache-2.0;MPL-2.0;Apache 2.0;WTFPL;CC0-1.0;CC-BY-3.0;CC-BY-4.0;Unlicense;Zlib;Apache*'"
   },
   "repository": {
     "type": "git",
@@ -44,12 +45,13 @@
     "eslint": "^6.2.1",
     "eslint-config-google": "^0.13.0",
     "jest": "^24.8.0",
-    "svelte": "^3.8.1",
+    "license-checker": "^25.0.1",
     "rollup": "^1.20.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-eslint": "^7.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-replace": "^2.2.0"
+    "rollup-plugin-replace": "^2.2.0",
+    "svelte": "^3.8.1"
   }
 }

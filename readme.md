@@ -27,6 +27,8 @@ To see the details code documentation, please read the [Code Documentation](http
       - [Max](#max)
       - [Between](#between)
       - [Regular Expression](#regular-expression)
+      - [Exclude](#exclude)
+      - [Include](#include)
       - [Ignore Empty](#ignore-empty)
     - [Custom Validation Rule](#custom-validation-rule)
     - [Trigger Form Validation](#trigger-form-validation)
@@ -312,6 +314,24 @@ import {rx} from '@spaceavocado/svelte-form';
 
 // The value must match custom regular expression.
 const rule = rx('Error message', /\d+\.\d+/);
+```
+
+#### Exclude
+```javascript
+import {exclude} from '@spaceavocado/svelte-form';
+
+// The value must not be present in the exclusion array.
+const ruleA = exclude('Error message', [1, 2]);
+const ruleB = exclude('Error message', ['toronto', 'new-york']);
+```
+
+#### Include
+```javascript
+import {include} from '@spaceavocado/svelte-form';
+
+// The value must be present in the inclusion array.
+const ruleA = include('Error message', [1, 2]);
+const ruleB = include('Error message', ['toronto', 'new-york']);
 ```
 
 #### Ignore Empty

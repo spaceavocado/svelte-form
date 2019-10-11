@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>rule/email.js - Documentation</title>
+    <title>rule/ignoreEmpty.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">rule/email.js</h1>
+    <h1 class="page-title">rule/ignoreEmpty.js</h1>
     
 
     
@@ -44,25 +44,27 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * Svelte Form validation rules module.
- * @module svelte-form/rule/email
+ * @module svelte-form/rule/ignore
  */
 
-import tc from '@spaceavocado/type-check';
+import required from './required';
+
+// Break validation symbol
+export const BREAK_FLAG = Symbol('Break Validation');
 
 /**
- * Email rule
- * @param {string} msg error message.
+ * Ignore empty rule
+ * This rule causes to break the validation chain for empty values.
  * @return {boolean|string} true when valid, error message otherwise.
  */
-export default (msg) => (value) => {
-  if (tc.isNullOrUndefined(value) || tc.not.isString(value)) {
-    return msg;
-  }
-  const rule = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-  if (value.match(rule) == null) {
-    return msg;
-  }
-  return true;
+export default () => {
+  const req = required('');
+  return (value) => {
+    if (req(value) !== true) {
+      return BREAK_FLAG;
+    }
+    return true;
+  };
 };
 </code></pre>
         </article>

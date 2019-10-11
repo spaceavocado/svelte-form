@@ -16,6 +16,8 @@ import min from './rule/min';
 import max from './rule/max';
 import between from './rule/between';
 import rx from './rule/rx';
+import exclude from './rule/exclude';
+import include from './rule/include';
 import ignoreEmpty from './rule/ignoreEmpty';
 
 export {
@@ -28,6 +30,8 @@ export {
   max,
   between,
   rx,
+  exclude,
+  include,
 };
 
 /**

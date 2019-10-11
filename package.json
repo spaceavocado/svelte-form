@@ -1,6 +1,6 @@
 {
   "name": "@spaceavocado/svelte-form",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple Svelte form model handler and input validations.",
   "main": "lib/svelte-form.js",
   "module": "lib/svelte-form.esm.js",
@@ -12,7 +12,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rollup -c",
-    "test": "jest /src/*",
+    "test": "jest --verbose /src/*",
     "docs": "jsdoc . -r -d docs -c jsdoc.json -R readme.md",
     "prepare": "npm run build"
   },

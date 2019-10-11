@@ -6,6 +6,8 @@ import min from './min';
 import max from './max';
 import between from './between';
 import rx from './rx';
+import exclude from './exclude';
+import include from './include';
 import ignore, {BREAK_FLAG} from './ignoreEmpty';
 
 /**
@@ -138,4 +140,48 @@ describe('Ignore', () => {
     {cond: '5.5', res: true},
   ];
   runTests(ignore(), tests);
+});
+
+describe('Exclude', () => {
+  let tests = [
+    {cond: undefined, res: 'invalid'},
+    {cond: null, res: 'invalid'},
+    {cond: {}, res: 'invalid'},
+    {cond: 1, res: 'invalid'},
+    {cond: '3', res: true},
+    {cond: 3, res: true},
+  ];
+  runTests(exclude('invalid', [1,2]), tests);
+
+  tests = [
+    {cond: undefined, res: 'invalid'},
+    {cond: null, res: 'invalid'},
+    {cond: {}, res: 'invalid'},
+    {cond: '1', res: 'invalid'},
+    {cond: '3', res: true},
+    {cond: 3, res: true},
+  ];
+  runTests(exclude('invalid', ['1','2']), tests);
+});
+
+describe('Include', () => {
+  let tests = [
+    {cond: undefined, res: 'invalid'},
+    {cond: null, res: 'invalid'},
+    {cond: {}, res: 'invalid'},
+    {cond: 3, res: 'invalid'},
+    {cond: '1', res: 'invalid'},
+    {cond: 1, res: true},
+  ];
+  runTests(include('invalid', [1,2]), tests);
+
+  tests = [
+    {cond: undefined, res: 'invalid'},
+    {cond: null, res: 'invalid'},
+    {cond: {}, res: 'invalid'},
+    {cond: '3', res: 'invalid'},
+    {cond: 1, res: 'invalid'},
+    {cond: '1', res: true},
+  ];
+  runTests(include('invalid', ['1','2']), tests);
 });

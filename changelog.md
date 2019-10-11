@@ -1,5 +1,9 @@
 # Svelte Form changelog
 
+## 1.0.4
+
+* New validation rules: Exclude, Include.
+
 ## 1.0.3
 
 * New feature: Validation breaking rule for empty values.

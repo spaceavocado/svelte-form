@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>rule/email.js - Documentation</title>
+    <title>rule/exclude.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -32,7 +32,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">rule/email.js</h1>
+    <h1 class="page-title">rule/exclude.js</h1>
     
 
     
@@ -44,22 +44,24 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * Svelte Form validation rules module.
- * @module svelte-form/rule/email
+ * @module svelte-form/rule/exclude
  */
 
 import tc from '@spaceavocado/type-check';
 
 /**
- * Email rule
+ * Max rule
  * @param {string} msg error message.
+ * @param {number[]|string[]} arg exclusion list.
  * @return {boolean|string} true when valid, error message otherwise.
  */
-export default (msg) => (value) => {
-  if (tc.isNullOrUndefined(value) || tc.not.isString(value)) {
+export default (msg, arg) => (value) => {
+  if (tc.isNullOrUndefined(value)
+  || (tc.not.isString(value) &amp;&amp; tc.not.isNumber(value))
+  || tc.isNullOrUndefined(arg)) {
     return msg;
   }
-  const rule = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-  if (value.match(rule) == null) {
+  if (arg.indexOf(value) > -1) {
     return msg;
   }
   return true;

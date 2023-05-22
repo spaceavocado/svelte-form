@@ -56,6 +56,7 @@ describe('Email', () => {
     {cond: 'email@domaincom', res: 'invalid'},
     {cond: '@domain.com', res: 'invalid'},
     {cond: 'email@domain.com', res: true},
+    {cond: 'email@domain.longertld', res: true},
   ];
   runTests(email('invalid'), tests);
 });
